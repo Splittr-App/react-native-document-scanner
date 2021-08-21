@@ -1,5 +1,5 @@
 {
-  "name": "@28harishkumar/react-native-scanner",
+  "name": "@splittr-app/react-native-scanner",
   "version": "3.0.0",
   "description": "Scan documents, automatic border detection",
   "main": "src/index.tsx",
