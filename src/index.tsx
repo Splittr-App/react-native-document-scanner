@@ -1,41 +1,40 @@
-import React from 'react';
+import React from 'react'
 import {
   DeviceEventEmitter,
   findNodeHandle,
   NativeModules,
   Platform,
   requireNativeComponent,
-  ViewStyle,
-} from 'react-native';
-
+  ViewStyle
+} from 'react-native'
 
 // TODO: responses are required as mentioned in this file
 
-const Scanner = requireNativeComponent('RNScanner');
-const ScannerManager: any = NativeModules.RNScannerManager;
+const Scanner = requireNativeComponent('RNPdfScanner')
+const ScannerManager: any = NativeModules.RNScannerManager
 
 export interface PictureCallbackProps {
-  croppedImage: string,
-  initialImage: string,
+  croppedImage: string;
+  initialImage: string;
 }
 
 export interface Coordinate {
-  x: number,
-  y: number,
+  x: number;
+  y: number;
 }
 
 export interface RectangleProps {
-  bottomLeft: Coordinate,
-  bottomRight: Coordinate,
-  topLeft: Coordinate,
-  topRight: Coordinate,
+  bottomLeft: Coordinate;
+  bottomRight: Coordinate;
+  topLeft: Coordinate;
+  topRight: Coordinate;
 }
 
 export interface DetectedRectangle extends RectangleProps {
   dimensions: {
-    height: number,
-    width: number,
-  }
+    height: number;
+    width: number;
+  };
 }
 
 export interface PictureTaken {
@@ -46,27 +45,27 @@ export interface PictureTaken {
 }
 
 export interface DeviceSetupCallbackProps {
-  hasCamera: boolean,
-  permissionToUseCamera: boolean,
-  flashIsAvailable: boolean,
-  previewHeightPercent: number,
-  previewWidthPercent: number,
+  hasCamera: boolean;
+  permissionToUseCamera: boolean;
+  flashIsAvailable: boolean;
+  previewHeightPercent: number;
+  previewWidthPercent: number;
 }
 
 export interface TorchCallbackProps {
-  enabled: boolean
+  enabled: boolean;
 }
 
 export interface Filter {
-  id: number,
-  name: string
+  id: number;
+  name: string;
 }
 
 export interface AndroidPermissionObject {
-  title: string,
-  message: string,
-  buttonNegative: string,
-  buttonPositive: string,
+  title: string;
+  message: string;
+  buttonNegative: string;
+  buttonPositive: string;
 }
 
 interface ScannerProps {
@@ -84,7 +83,7 @@ interface ScannerProps {
   onTorchChanged?: (args: TorchCallbackProps) => void;
   onErrorProcessingImage?: (args: PictureCallbackProps) => void;
   filterId?: number;
-  capturedQuality?: number,
+  capturedQuality?: number;
   styles?: object;
   androidPermission?: AndroidPermissionObject | boolean;
   quality?: number;
@@ -138,19 +137,15 @@ class ScannerComponent extends React.Component<ScannerProps> {
     }
   }
 
-  componentDidUpdate(prevProps: ScannerProps) {
+  componentDidUpdate (prevProps: ScannerProps) {
     if (Platform.OS === 'android') {
       if (this.props.onPictureTaken !== prevProps.onPictureTaken) {
-        if (prevProps.onPictureTaken)
-          DeviceEventEmitter.removeListener('onPictureTaken', prevProps.onPictureTaken)
-        if (this.props.onPictureTaken)
-          DeviceEventEmitter.addListener('onPictureTaken', this.props.onPictureTaken)
+        if (prevProps.onPictureTaken) { DeviceEventEmitter.removeListener('onPictureTaken', prevProps.onPictureTaken) }
+        if (this.props.onPictureTaken) { DeviceEventEmitter.addListener('onPictureTaken', this.props.onPictureTaken) }
       }
       if (this.props.onProcessing !== prevProps.onProcessing) {
-        if (prevProps.onProcessing)
-          DeviceEventEmitter.removeListener('onProcessingChange', prevProps.onProcessing)
-        if (this.props.onProcessing)
-          DeviceEventEmitter.addListener('onProcessingChange', this.props.onProcessing)
+        if (prevProps.onProcessing) { DeviceEventEmitter.removeListener('onProcessingChange', prevProps.onProcessing) }
+        if (this.props.onProcessing) { DeviceEventEmitter.addListener('onProcessingChange', this.props.onProcessing) }
       }
     }
   }
@@ -169,8 +164,8 @@ class ScannerComponent extends React.Component<ScannerProps> {
     }
   }
 
-  _scannerRef: any = null;
-  _scannerHandle: number | null = null;
+  _scannerRef: any = null
+  _scannerHandle: number | null = null
   _setReference = (ref: any) => {
     if (ref) {
       this._scannerRef = ref
@@ -179,7 +174,7 @@ class ScannerComponent extends React.Component<ScannerProps> {
       this._scannerRef = null
       this._scannerHandle = null
     }
-  };
+  }
 
   render () {
     return (
@@ -201,5 +196,5 @@ class ScannerComponent extends React.Component<ScannerProps> {
   }
 }
 
-export default ScannerComponent;
-export { ScannerManager };
+export default ScannerComponent
+export { ScannerManager }
