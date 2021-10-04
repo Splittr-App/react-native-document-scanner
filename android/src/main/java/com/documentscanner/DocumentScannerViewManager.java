@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 public class DocumentScannerViewManager extends ViewGroupManager<MainView> {
-    private static final String REACT_CLASS = "RNScanner";
+    private static final String REACT_CLASS = "RNPdfScanner";
     private MainView view = null;
 
     @Override
